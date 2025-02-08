@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const plm= require("passport-local-mongoose");
 mongoose.connect("mongodb+srv://prithvi312:fsfO7jyoofuv0jz5@cluster0.wrm4e.mongodb.net/sociavo");
 
 const userSchema = new mongoose.Schema({
@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
     },
     dp: {
         type: String, // URL to profile picture
@@ -31,5 +30,6 @@ const userSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
+userSchema.plugin(plm);
 module.exports= mongoose.model("User", userSchema);
 

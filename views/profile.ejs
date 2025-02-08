@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+</head>
+<body>
+    <div class="profile-header">
+        <img class="cover-photo" src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cover Photo">
+        <div class="profile-pic-container">
+            <img class="profile-pic" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Picture">
+        </div>
+    </div>
+
+    <div class="profile-info">
+        <h1><%= user.fullname %></h1>
+        <p class="job-title username"><%="@" +user.username %></p>
+        <p class="desc">I am a proficient web developer with 3+ years of experience.</p>
+        <div class="profile-social">
+            <a href="https://www.linkedin.com/in/prayushadhikari/">LinkedIn</a>
+            <a href="https://github.com/adhikareeprayush">GitHub</a>
+            <a href="https://dev.to/adhikareeprayush">Blogs</a>
+        </div>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+<hr class="divider">
+<form action="/upload" enctype="multipart/form-data" method="post">
+    <input type="file" name="file" accept="image/*">
+    <input type="submit" class="logout-btn" value="Upload">
+</form>
+    <hr class="divider">
+
+    <!-- Posts Section -->
+    <div class="post-grid">
+            <div class="post-card">
+                <img src="https://images.unsplash.com/photo-1738599778390-af77d7cf10e6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" alt="Post Image">
+                <p class="post-title">Maauj</p>
+            </div>
+    </div>
+
+
+</body>
+</html>

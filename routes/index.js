@@ -2,38 +2,83 @@ var express = require('express');
 var router = express.Router();
 const userModel = require("./users");
 const postModel = require("./post");
+const passport = require('passport');
+const upload = require("./multer");
+
+const localStrategy = require('passport-local');
+passport.use(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get("/createuser",async (req,res)=>{
-  const user= await userModel.create({
-    username:"prithvi312",
-    email:"prithvi07raj07@gmail.com",
-    password:"prithvi",
-    fullname:"Prithvi Raj",
-    posts:[], // Assuming you have a Post model
+
+// Register route
+router.post("/register",async (req,res)=>{
+  const{username,email,fullname}=req.body;
+  const userData = new userModel({username,email,fullname});
+
+  userModel.register(userData,req.body.password)
+  .then(()=>{
+    passport.authenticate("local")(req,res,()=>{
+      res.redirect("/profile");
+    })
   })
-  res.send(user);
 })
 
-router.get("/createpost",async (req,res)=>{
-  const createdpost= await postModel.create({
-    posttext:"Hello duniya",
-    user:"67a76a268b228b3272700dbe",
-    likes:[],
-  })
-  let user=await userModel.findOne({_id:"67a76a268b228b3272700dbe"});
-  user.posts.push(createdpost._id);
-  await user.save();
-  res.send("done");
+// Register page
+
+// Login route
+router.post("/login",passport.authenticate("local",{
+  successRedirect:"/profile",
+  failureRedirect:"/login",
+  failureFlash:true
+}),(req,res)=>{
 })
 
-router.get("/getuser",async (req,res)=>{
-  const user= await userModel.find().populate("posts");
-  res.send(user);
+//login page
+router.get("/login",(req,res)=>{
+  res.render("login",{error:req.flash("error")});
 })
 
+//logout route
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+
+
+// check if user is logged in
+function isLoggedIn(req,res,next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
+
+// Profile route
+router.get("/profile",isLoggedIn,async(req,res)=>{
+  const user=await userModel.findOne({
+    username:req.session.passport.user,
+  }).populate("posts");
+  res.render("profile",{user});
+})
+
+//upload route
+router.post("/upload",upload.single("file"),(req,res)=>{
+  if(!req.file){
+    return res.status(400).send("No files were uploaded");
+  }
+  res.send("File uploaded successfully");
+});
+
+// feed route
+router.get("/feed",(req,res)=>{
+  res.render("feed");
+})
 module.exports = router;

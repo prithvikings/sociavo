@@ -3,3 +3,8 @@
 ## /feed yaha par saari image dikhegi
 ## /click karke image open ho jayega save kar skte ho
 ## /board/:boardname poora board dikhega
+
+## Posts
+## image and caption include
+## multer
+## caption add
