@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-    posttext: {
+    imageText: {
         type: String,
         required: true
     },
@@ -12,6 +12,9 @@ const postSchema = new mongoose.Schema({
     likes: {
         type: Array,
         default: [],
+    },
+    image:{
+        type: String
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,

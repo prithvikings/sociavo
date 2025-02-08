@@ -70,12 +70,24 @@ router.get("/profile",isLoggedIn,async(req,res)=>{
 })
 
 //upload route
-router.post("/upload",upload.single("file"),(req,res)=>{
+router.post("/upload",isLoggedIn,upload.single("file"),async (req,res)=>{
   if(!req.file){
     return res.status(400).send("No files were uploaded");
   }
-  res.send("File uploaded successfully");
+  const user=await userModel.findOne({
+    username:req.session.passport.user,
+  })
+ const postdata= await postModel.create({
+    image:req.file.filename,
+    imageText:req.body.filecaption,
+    user:user._id
+  })
+  user.posts.push(postdata._id);
+  await user.save();
+  res.redirect("/profile");
 });
+
+//jo file upload hui hai use save karo as a post and uska postid user ko do and post ko user id do
 
 // feed route
 router.get("/feed",(req,res)=>{
