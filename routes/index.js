@@ -69,8 +69,16 @@ router.get("/profile",isLoggedIn,async(req,res)=>{
   res.render("profile",{user});
 })
 
+//post upload route
+router.get("/upload",isLoggedIn,async (req,res)=>{
+  const user=await userModel.findOne({
+    username:req.session.passport.user,
+  }).populate("posts");
+  res.render("upload",{user});
+})
+
 //upload route
-router.post("/upload",isLoggedIn,upload.single("file"),async (req,res)=>{
+router.post("/uploaded",isLoggedIn,upload.single("file"),async (req,res)=>{
   if(!req.file){
     return res.status(400).send("No files were uploaded");
   }

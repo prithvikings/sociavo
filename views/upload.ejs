@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= user.fullname %> - Profile</title>
     <link rel="stylesheet" href="/stylesheets/profile.css">
-    <link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-    rel="stylesheet"
-/>
 </head>
 <body>
 
@@ -26,24 +22,23 @@
         <p class="job-title username"><%="@" + user.username %></p>
         <p class="desc">I am a proficient web developer with 3+ years of experience.</p>
         <div class="profile-social">
-            <a href="https://www.linkedin.com/in/prithvi312/" target="_blank">LinkedIn</a>
-            <a href="https://github.com/prithvikings" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/prayushadhikari/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/adhikareeprayush" target="_blank">GitHub</a>
             <a href="https://dev.to/adhikareeprayush" target="_blank">Blogs</a>
         </div>
-        <a href="/logout" class="logout-btn" style="margin-right: 1rem; font-weight: 500;">Logout</a>
-        <a href="/upload" class="logout-btn" style="font-weight: 500; ">Create Post <i class="ri-pencil-fill"></i></a>
+        <a href="/logout" class="logout-btn">Logout</a>
     </div>
 
     <hr class="divider">
-    <!-- Posts Section -->
-    <div class="post-grid">
-        <% user.posts.forEach(function(post) { %>
-            <div class="post-card">
-                <img src="/images/uploads/<%= post.image %>" alt="Post Image">
-                <p class="post-title"><%= post.imageText %></p>
-            </div>
-        <% }) %>
-    </div>
+
+    <!-- Upload Form -->
+    <form action="/uploaded" enctype="multipart/form-data" method="post" class="upload-form">
+        <input type="text" name="filecaption" placeholder="Caption" required>
+        <input type="file" name="file" accept="image/*">
+        <input type="submit" class="upload-btn" value="Upload">
+    </form>
+
+    <hr class="divider">
 
 </body>
 </html>
