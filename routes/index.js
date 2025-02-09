@@ -13,11 +13,27 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get("/register",(req,res)=>{
+  res.render("register",{error:req.flash("error")});
+});
 
 // Register route
 router.post("/register",async (req,res)=>{
   const{username,email,fullname}=req.body;
   const userData = new userModel({username,email,fullname});
+  
+  //if user already exists
+  const userExists=await userModel.findOne({username:req.body.username});
+  if(userExists){
+    req.flash("error","User already exists");
+    return res.redirect("/register");
+  }
+
+  // Validate required fields before proceeding
+if (!username || !email || !fullname || !req.body.password) {
+  req.flash("error", "Please fill all the fields");
+  return res.redirect("/register");
+}
 
   userModel.register(userData,req.body.password)
   .then(()=>{
