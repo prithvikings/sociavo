@@ -1,6 +1,6 @@
-# 🌍 SocialSphere - A Simple Social Media App  
+# 🌍 SociaVo - A Simple Social Media App  
 
-SocialSphere is a lightweight social media platform where users can **create an account, upload pictures with captions, and explore posts from others**. Built using **Node.js, Express, EJS**, and other powerful libraries, this project demonstrates the core functionalities of a modern social platform.  
+SociaVo is a lightweight social media platform where users can **create an account, upload pictures with captions, and explore posts from others**. Built using **Node.js, Express, EJS**, and other powerful libraries, this project demonstrates the core functionalities of a modern social platform.  
 
 ---
 
